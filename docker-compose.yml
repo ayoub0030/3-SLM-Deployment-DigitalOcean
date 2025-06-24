@@ -53,9 +53,8 @@ services:
     deploy:
       resources:
         limits:
-          memory: 16G
-    runtime: nvidia  # Required for GPU access
-    shm_size: '2gb'  # Shared memory size
+          memory: 8G  # Reduced memory for CPU-only
+    shm_size: '1gb'  # Reduced shared memory
     networks:
       - slm-network
 
