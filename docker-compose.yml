@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - qwen
+      - phi2
+      - gemma
+    networks:
+      - slm-network
+
+  qwen:
+    build: ./qwen
+    environment:
+      - MODEL_NAME=Qwen/Qwen2.5-0.5B
+    networks:
+      - slm-network
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+  phi2:
+    build: ./phi2
+    environment:
+      - MODEL_NAME=microsoft/phi-2
+    networks:
+      - slm-network
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+  gemma:
+    build: ./gemma
+    environment:
+      - MODEL_NAME=google/gemma-2b
+    networks:
+      - slm-network
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+networks:
+  slm-network:
+    driver: bridge
