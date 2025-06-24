@@ -45,6 +45,20 @@ services:
         limits:
           memory: 2G
 
+  mistral:
+    build: ./mistral
+    environment:
+      - MODEL_NAME=mistralai/Mistral-7B-v0.1
+      - HUGGING_FACE_HUB_TOKEN=${HUGGINGFACE_TOKEN}
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+    runtime: nvidia  # Required for GPU access
+    shm_size: '2gb'  # Shared memory size
+    networks:
+      - slm-network
+
 networks:
   slm-network:
     driver: bridge
